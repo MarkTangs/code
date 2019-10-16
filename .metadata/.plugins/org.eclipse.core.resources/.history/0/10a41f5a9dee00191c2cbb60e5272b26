@@ -1,0 +1,102 @@
+package com.zyz;
+
+public class DynamicArray<E> {
+	/***
+	 * 元素的数量
+	 */
+	private int size;
+	/**
+	 * 所有的元素
+	 */
+	private E[] elements;
+	
+	private static int DEFAULT_CAPACITY = 10;
+	
+	public DynamicArray(int capacity) {
+		capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
+		elements = (E[])new Object[capacity];
+	}
+	public DynamicArray() {
+		this(DEFAULT_CAPACITY);
+	}
+	/**
+	 * 清除所有元素
+	 */
+	public void clear() {
+		for (int i = 0; i < elements.length; i++) {
+			elements[i] = null;
+		}
+		size = 0;
+	}
+	
+	/**
+	 * 获取index位置的元素
+	 * @param index
+	 * @return
+	 */
+	public E get(int index) {
+		rangCheck(index);
+		return elements[index];
+	}
+	
+	/**
+	 * 设置index位置新元素
+	 * @param index
+	 * @param element
+	 */
+	public void set(int index,E element) {
+		rangCheck(index);
+		elements[index] = element;
+	}
+	
+	/**
+	 * 添加元素
+	 * @param index
+	 * @param element
+	 */
+	public void add(int index, E element) {
+		rangCheck(index);
+		
+		for (int i = size - 1; i >= index; i--) {
+			elements[i + 1] = elements[i];
+		}
+		elements[index] = element;
+		size++;
+	}
+	
+	public void add(E element) {
+		add(size, element);
+	}
+	/**
+	 * 删除元素
+	 * @param index
+	 * @return
+	 */
+	public E remove(int index) {
+		rangCheck(index);
+		E oldE = elements[index];
+		for (int i = index + 1; i < size; i++) {
+			elements[i - 1] = elements[i];
+		}
+		size--;
+		elements[size] = null;
+		return oldE;
+	}
+	
+	
+	private void rangCheck(int index) {
+		if (index < 0 || index >= size) {
+			outOfBounds(index);
+		}
+	}
+	private void rangCheckForAdd(int index) {
+		if (index < 0 || index > size) {
+			outOfBounds(index);
+		}
+	}
+	private void outOfBounds(int index) {
+		throw new IndexOutOfBoundsException("Index:" +index + ",Size:" + size);
+	}
+	
+	
+}

@@ -1,0 +1,8 @@
+package com.zyz;
+
+public class Main {
+	public static void main(String[] args) {
+		DynamicArray<Object> array = new DynamicArray<E>();
+		
+	}
+}
