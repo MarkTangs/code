@@ -1,25 +1,19 @@
 package LinkList;
 
-public class LinkList<E> extends AbstractList<E>{
+public class singleCircleLinkList<E> extends AbstractList<E>{
 
 	
 	private static class Node<E> {
 		E element;
 		Node<E> next;
-		Node<E> prev;
-		public Node(Node<E> prev,E element,Node<E> next) {
+		public Node(E element,Node<E> next) {
 			this.element = element;
-			this.prev = prev;
 			this.next = next;
 		}
 		@Override
 		public String toString() {
 			StringBuffer str = new StringBuffer();
-			if (prev != null) {
-				str.append(prev.element).append("_");
-			}else {
-				str.append("null_");
-			}
+			
 			str.append(element).append("_");
 			if (next != null) {
 				str.append(next.element);
@@ -31,37 +25,24 @@ public class LinkList<E> extends AbstractList<E>{
 	}
 	
 	private Node<E> head;
-	private Node<E> last;
+	
 	@Override
 	public void clear() {
 		size = 0;
 		head = null;
-		last = null;
 	}
 
 	@Override
 	public void add(int index, E element) {
-		rangCheckForAdd(index);
-		
-		if (index == size) { //size == 0 || index == 0
-			Node<E> oldLastNode = last;
-			last = new Node<E>(oldLastNode, element, null);
-			if (oldLastNode == null) {  //添加第一个元素
-				head = last;
-			}else {
-				oldLastNode.next = last;
-			}
+		if (index == 0) {
+
+			Node<E> newHeaNode = new Node<E>(element,head);
+			Node<E> lastNode = (size == 0) ? newHeaNode : node(size - 1);
+			lastNode.next = newHeaNode;
+			head = newHeaNode;
 		}else {
-			
-			Node<E> next = node(index);
-			Node<E> prev = next.prev;
-			Node<E> newNode = new Node<E>(prev, element, next);
-			next.prev = newNode;
-			if (prev == null) {
-				head = newNode;
-			}else {
-				prev.next = newNode;
-			}
+			Node<E> prev = node(index - 1);
+			prev.next = new Node<E>(element, prev.next);
 		}
 		size++;
 	}
@@ -80,25 +61,16 @@ public class LinkList<E> extends AbstractList<E>{
 
 	@Override
 	public E remove(int index) {
-		rangCheck(index);
-
-		Node<E> node = node(index);
-		Node<E> prev = node.prev;
-		Node<E> next = node.next;
-		
-		if (prev == null) {
-			head = next;
+		Node<E> oldNode = node(index);
+		if (index == 0) {
+			head = head.next;
 		}else {
-			prev.next = next;
+			Node<E> prev = node(index - 1);
+			oldNode = prev.next;
+			prev.next = oldNode.next;
 		}
-		if (next == null) {
-			last = prev;
-		}else {
-			next.prev = prev;
-		}
-		
 		size--;
-		return node.element;
+		return oldNode.element;
 	}
 
 	@Override
@@ -130,19 +102,11 @@ public class LinkList<E> extends AbstractList<E>{
 	 */
 	private Node<E> node(int index) {
 		rangCheck(index);
-		if (index < (size >> 1)) {
-			Node<E> node = head;
-			for (int i = 0; i < index; i++) {
-				node = node.next;
-			}
-			return node;
-		}else {
-			Node<E> node = last;
-			for (int i = size - 1; i > index ; i--) {
-				node = node.prev;
-			}
-			return node;
+		Node<E> node = head;
+		for (int i = 0; i < index; i++) {
+			node = node.next;
 		}
+		return node;
 	}
 	
 	@Override
@@ -158,6 +122,4 @@ public class LinkList<E> extends AbstractList<E>{
 		str.append("]");
 		return str.toString();
 	}
-	
-	
 }

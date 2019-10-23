@@ -7,5 +7,14 @@
     <fullyQualifiedTypeName name="com.sun.org.apache.xalan.internal.xsltc.compiler.sym"/>
     <fullyQualifiedTypeName name="com.zyz.DynamicArray"/>
     <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="com.zyz.List"/>
+    <fullyQualifiedTypeName name="com.zyz.AbstractList"/>
+    <fullyQualifiedTypeName name="java.lang.Class"/>
     <fullyQualifiedTypeName name="E"/>
+    <fullyQualifiedTypeName name="jdk.jfr.internal.OldObjectSample"/>
+    <fullyQualifiedTypeName name="com.zyz.LinkList.Node"/>
+    <fullyQualifiedTypeName name="链表.ListNode"/>
+    <fullyQualifiedTypeName name="java.lang.Package"/>
+    <fullyQualifiedTypeName name="java.security.acl.LastOwnerException"/>
+    <fullyQualifiedTypeName name="LinkList.LinkList.Node"/>
 </qualifiedTypeNameHistroy>

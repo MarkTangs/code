@@ -1,6 +1,6 @@
 package LinkList;
 
-public class LinkList<E> extends AbstractList<E>{
+public class circleLinkListForHafuman<E> extends AbstractList<E>{
 
 	
 	private static class Node<E> {
@@ -32,6 +32,26 @@ public class LinkList<E> extends AbstractList<E>{
 	
 	private Node<E> head;
 	private Node<E> last;
+	private Node<E> current;
+	
+	public void reset() {
+		current = head;
+	}
+	
+	public void next() {
+		current = current.next;
+	}
+	
+	public void remove() {
+		remove(indexOfNode(current));
+		System.out.println(current);
+		current = current.next;
+	}
+	
+	private int indexOfNode(Node<E> node) {
+		return indexOf(node.element);
+	}
+	
 	@Override
 	public void clear() {
 		size = 0;
@@ -45,11 +65,14 @@ public class LinkList<E> extends AbstractList<E>{
 		
 		if (index == size) { //size == 0 || index == 0
 			Node<E> oldLastNode = last;
-			last = new Node<E>(oldLastNode, element, null);
+			last = new Node<E>(oldLastNode, element, head);
 			if (oldLastNode == null) {  //添加第一个元素
 				head = last;
+				head.next = head;
+				head.prev = head;
 			}else {
 				oldLastNode.next = last;
+				head.prev = last;
 			}
 		}else {
 			
@@ -57,10 +80,9 @@ public class LinkList<E> extends AbstractList<E>{
 			Node<E> prev = next.prev;
 			Node<E> newNode = new Node<E>(prev, element, next);
 			next.prev = newNode;
-			if (prev == null) {
+			prev.next = newNode;
+			if (next == head) {
 				head = newNode;
-			}else {
-				prev.next = newNode;
 			}
 		}
 		size++;
@@ -83,20 +105,21 @@ public class LinkList<E> extends AbstractList<E>{
 		rangCheck(index);
 
 		Node<E> node = node(index);
-		Node<E> prev = node.prev;
-		Node<E> next = node.next;
-		
-		if (prev == null) {
-			head = next;
+		if (size == 1) {
+			head = null;
+			last = null;
 		}else {
+			Node<E> prev = node.prev;
+			Node<E> next = node.next;
 			prev.next = next;
-		}
-		if (next == null) {
-			last = prev;
-		}else {
 			next.prev = prev;
+			if (node == head) {
+				head = next;
+			}
+			if (node == last) {
+				last = prev;
+			}
 		}
-		
 		size--;
 		return node.element;
 	}
