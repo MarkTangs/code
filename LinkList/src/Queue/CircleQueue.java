@@ -10,6 +10,7 @@ public class CircleQueue<E> {
 		elements = (E[]) new Object[DEFAULT_CAPACITY];
 	}
 	
+	
 	public int size() {
 		return size;
 	}
