@@ -2,18 +2,16 @@ package Queue;
 
 public class Main {
 	public static void main(String[] args) {
-		CircleQueue<Integer> queue = new CircleQueue<Integer>();
+		CircleDeque<Integer> queue = new CircleDeque<Integer>();
 		
-		queue.enQueue(11);
-		queue.enQueue(22);
-		queue.enQueue(33);
-		queue.enQueue(44);
-		for (int i = 0; i < 9; i++) {
-			queue.enQueue(i);
-		}
-		for (int i = 0; i < 4; i++) {
-			queue.deQueue();
-		}
+		queue.enQueueFront(11);
+		queue.enQueueFront(22);
+		queue.enQueueFront(33);
+		queue.enQueueRear(44);
+		
+//		for (int i = 0; i <2; i++) {
+//			queue.deQueueFront();
+//		}
 		
 //		while (!queue.isEmpty()) {
 //			System.out.println(queue.deQueue());
